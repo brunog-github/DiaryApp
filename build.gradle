@@ -1,0 +1,32 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        nav_version = '2.5.3'
+        firebase_auth = '21.3.0'
+        google_auth = '20.5.0'
+        firebase_storage = '20.1.0'
+        room_version = '2.5.1'
+        splash_screen = '1.0.0'
+        realm_sync = '1.0.2'
+        hilt_version = '2.44.2'
+        hilt_navigation = '1.0.0'
+        date_picker = '0.9.0'
+        coil_version = '2.3.0'
+        pager_accompanist = '0.27.0'
+        messagebar_compose = '1.0.5'
+        onetap_compose = '1.0.0'
+        desugarjdk_version = '1.2.0'
+    }
+ /*   dependencies {
+        classpath 'com.google.gms:google-services:4.3.15'
+    }*/
+}
+plugins {
+    id 'com.android.application' version '8.0.0' apply false
+    id 'com.android.library' version '8.0.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
+
+    // Dagger e Realm DB Plugins
+    id 'io.realm.kotlin' version '1.0.2' apply false
+    id 'com.google.dagger.hilt.android' version '2.44' apply false
+}
