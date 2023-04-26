@@ -1,5 +1,6 @@
 package dev.brunog.dairyapp.presentation.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +51,7 @@ fun DiaryHolder(
 ) {
     val localDensity = LocalDensity.current
     var componentHeight by remember { mutableStateOf(0.dp) }
+    var galleryOpened by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier
@@ -89,13 +92,26 @@ fun DiaryHolder(
                     maxLines = DIARY_MAX_LINES,
                     overflow = TextOverflow.Ellipsis
                 )
+                if (diary.images.isNotEmpty()) {
+                    ShowGalleryButton(
+                        galleryOpened = galleryOpened,
+                        onClick = {
+                            galleryOpened = !galleryOpened
+                        }
+                    )
+                }
+                AnimatedVisibility(visible = galleryOpened) {
+                    Column(modifier = Modifier.padding(all = 14.dp)) {
+                        Gallery(images = diary.images)
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun DiaryHeader(
+private fun DiaryHeader(
     moodName: String,
     time: Instant
 ) {
@@ -128,6 +144,21 @@ fun DiaryHeader(
             text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date.from(time)),
             style = TextStyle(
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize
+            )
+        )
+    }
+}
+
+@Composable
+private fun ShowGalleryButton(
+    galleryOpened: Boolean,
+    onClick: () -> Unit
+) {
+    TextButton(onClick = onClick) {
+        Text(
+            text = if (galleryOpened) "Hide Gallery" else "Show Gallery",
+            style = TextStyle(
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
             )
         )
     }
