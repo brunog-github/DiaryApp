@@ -75,7 +75,7 @@ fun Gallery(
 }
 
 @Composable
-fun LastImageOverlay(
+private fun LastImageOverlay(
     imageSize: Dp,
     remainingImages: Int,
     imageShape: CornerBasedShape

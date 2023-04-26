@@ -65,6 +65,6 @@ fun DateHeader(
 
 @Preview(showBackground = true)
 @Composable
-fun DateHeaderPreview() {
+private fun DateHeaderPreview() {
     DateHeader(localDate = LocalDate.now())
 }
