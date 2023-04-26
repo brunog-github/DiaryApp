@@ -94,11 +94,7 @@ dependencies {
     implementation "androidx.core:core-splashscreen:$splash_screen"
 
     // Mongo DB Realm
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt') {
-        version {
-            strictly("1.6.0-native-mt")
-        }
-    }
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4')
     implementation "io.realm.kotlin:library-sync:$realm_sync"
 
     // Dagger Hilt
