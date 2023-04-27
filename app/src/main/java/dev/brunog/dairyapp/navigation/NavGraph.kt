@@ -10,7 +10,8 @@ import dev.brunog.dairyapp.navigation.routes.writeRoute
 @Composable
 fun SetupNavGraph(
     startDestination: String,
-    navController: NavHostController
+    navController: NavHostController,
+    onDataLoaded: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -20,7 +21,8 @@ fun SetupNavGraph(
             navigateToHome = {
                 navController.popBackStack()
                 navController.navigate(Screen.Home.route)
-            }
+            },
+            onDataLoaded = onDataLoaded
         )
         homeRoute(
             onNavigateToWriteScreen = {
@@ -29,7 +31,8 @@ fun SetupNavGraph(
             onNavigateToAuth = {
                 navController.popBackStack()
                 navController.navigate(Screen.Authentication.route)
-            }
+            },
+            onDataLoaded = onDataLoaded
         )
         writeRoute()
     }

@@ -1,6 +1,5 @@
 package dev.brunog.dairyapp.presentation.screens.viewmodels
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -23,7 +22,6 @@ class HomeViewModel : ViewModel() {
     private fun observeAllDiaries() {
         viewModelScope.launch {
             MongoDB.getAllDiaries().collect { result ->
-                Log.d("Viewmode","$result")
                 diaries.value = result
             }
         }

@@ -17,6 +17,7 @@ import dev.brunog.dairyapp.presentation.components.DisplayAlertDialog
 import dev.brunog.dairyapp.presentation.screens.home.HomeScreen
 import dev.brunog.dairyapp.presentation.screens.viewmodels.HomeViewModel
 import dev.brunog.dairyapp.util.Constants
+import dev.brunog.dairyapp.util.RequestState
 import io.realm.kotlin.mongodb.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +25,8 @@ import kotlinx.coroutines.withContext
 
 fun NavGraphBuilder.homeRoute(
     onNavigateToWriteScreen: () -> Unit,
-    onNavigateToAuth: () -> Unit
+    onNavigateToAuth: () -> Unit,
+    onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Home.route) {
         val viewModel: HomeViewModel = viewModel()
@@ -33,6 +35,12 @@ fun NavGraphBuilder.homeRoute(
         val scope = rememberCoroutineScope()
 
         var signOutDialogOpened by remember { mutableStateOf(false) }
+
+        LaunchedEffect(key1 = diaries) {
+            if (diaries !is RequestState.Loading) {
+                onDataLoaded()
+            }
+        }
 
         HomeScreen(
             diaries = diaries,

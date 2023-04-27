@@ -1,5 +1,6 @@
 package dev.brunog.dairyapp.navigation.routes
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
@@ -11,7 +12,8 @@ import dev.brunog.dairyapp.presentation.screens.auth.AuthenticationScreen
 import dev.brunog.dairyapp.presentation.screens.viewmodels.AuthenticationViewModel
 
 fun NavGraphBuilder.authenticationRoute(
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Authentication.route) {
         val viewModel: AuthenticationViewModel = viewModel()
@@ -19,6 +21,10 @@ fun NavGraphBuilder.authenticationRoute(
         val authenticated by viewModel.authenticated
         val oneTapState = rememberOneTapSignInState()
         val messageBarState = rememberMessageBarState()
+
+        LaunchedEffect(key1 = Unit) {
+            onDataLoaded()
+        }
 
         AuthenticationScreen(
             loadingState = loadingState,
