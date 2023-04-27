@@ -1,9 +1,18 @@
 package dev.brunog.dairyapp.presentation.screens.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,14 +21,60 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import dev.brunog.dairyapp.model.Diary
+import dev.brunog.dairyapp.presentation.components.DiaryHolder
+import dev.brunog.dairyapp.presentation.components.EmptyPage
 import java.time.LocalDate
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HomeContent(
+    diaryNotes: Map<LocalDate, List<Diary>>,
+    paddingValues: PaddingValues,
+    onClick: (String) -> Unit
+) {
+    if (diaryNotes.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .padding(
+                    top = paddingValues.calculateTopPadding(),
+                    bottom = paddingValues.calculateBottomPadding(),
+                    start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                    end = paddingValues.calculateEndPadding(LayoutDirection.Ltr)
+                )
+        ) {
+            diaryNotes.forEach { (localDate, diaries) ->
+                stickyHeader(key = localDate) {
+                    DateHeader(localDate = localDate)
+                }
+                items(
+                    items = diaries,
+                    key = { it._id.toHexString() }
+                ) {
+                    DiaryHolder(
+                        diary = it,
+                        onClick = onClick
+                    )
+                }
+            }
+        }
+    } else {
+        EmptyPage()
+    }
+}
 
 @Composable
 fun DateHeader(
     localDate: LocalDate
 ) {
     Row(
+        modifier = Modifier
+            .padding(bottom = 14.dp)
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
@@ -56,7 +111,7 @@ fun DateHeader(
                 style = TextStyle(
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
             )
         }

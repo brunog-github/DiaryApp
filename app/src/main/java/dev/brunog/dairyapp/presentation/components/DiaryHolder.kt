@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import dev.brunog.dairyapp.model.Diary
 import dev.brunog.dairyapp.model.Mood
 import dev.brunog.dairyapp.ui.theme.Elevation
-import dev.brunog.dairyapp.ui.util.Constants.DIARY_MAX_LINES
-import dev.brunog.dairyapp.ui.util.toInstant
+import dev.brunog.dairyapp.util.Constants.DIARY_MAX_LINES
+import dev.brunog.dairyapp.util.toInstant
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.Date
@@ -143,7 +143,8 @@ private fun DiaryHeader(
         Text(
             text = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date.from(time)),
             style = TextStyle(
-                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                color = mood.contentColor
             )
         )
     }

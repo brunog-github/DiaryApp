@@ -14,7 +14,7 @@ import com.stevdzasan.messagebar.ContentWithMessageBar
 import com.stevdzasan.messagebar.MessageBarState
 import com.stevdzasan.onetap.OneTapSignInState
 import com.stevdzasan.onetap.OneTapSignInWithGoogle
-import dev.brunog.dairyapp.ui.util.Constants.CLIENT_ID
+import dev.brunog.dairyapp.util.Constants.CLIENT_ID
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,4 +1,4 @@
-package dev.brunog.dairyapp.ui.util
+package dev.brunog.dairyapp.util
 
 import io.realm.kotlin.types.RealmInstant
 import java.time.Instant

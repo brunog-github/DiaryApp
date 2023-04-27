@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.brunog.dairyapp.navigation.Screen
 import dev.brunog.dairyapp.navigation.SetupNavGraph
 import dev.brunog.dairyapp.ui.theme.DairyAppTheme
-import dev.brunog.dairyapp.ui.util.Constants.APP_ID
+import dev.brunog.dairyapp.util.Constants.APP_ID
 import io.realm.kotlin.mongodb.App
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package dev.brunog.dairyapp.ui.util
+package dev.brunog.dairyapp.util
 
 import dev.brunog.dairyapp.BuildConfig
 
