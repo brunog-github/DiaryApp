@@ -34,7 +34,11 @@ fun SetupNavGraph(
             },
             onDataLoaded = onDataLoaded
         )
-        writeRoute()
+        writeRoute(
+            onBackPressed = {
+                navController.popBackStack()
+            }
+        )
     }
 }
 

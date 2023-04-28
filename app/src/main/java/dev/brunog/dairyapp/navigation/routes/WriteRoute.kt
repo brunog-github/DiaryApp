@@ -5,8 +5,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.brunog.dairyapp.navigation.Screen
+import dev.brunog.dairyapp.presentation.screens.write.WriteScreen
 
-fun NavGraphBuilder.writeRoute() {
+fun NavGraphBuilder.writeRoute(
+    onBackPressed: () -> Unit
+) {
     composable(
         route = Screen.Write.route,
         arguments = listOf(navArgument(name = "diaryId") {
@@ -15,6 +18,10 @@ fun NavGraphBuilder.writeRoute() {
             defaultValue = null
         })
     ) {
-
+        WriteScreen(
+            selectedDiary = null,
+            onBackPressed = onBackPressed,
+            onDeleteClicked = {}
+        )
     }
 }
