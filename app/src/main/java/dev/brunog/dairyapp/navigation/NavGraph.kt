@@ -32,7 +32,10 @@ fun SetupNavGraph(
                 navController.popBackStack()
                 navController.navigate(Screen.Authentication.route)
             },
-            onDataLoaded = onDataLoaded
+            onDataLoaded = onDataLoaded,
+            onNavigateToWriteScreenWithArgs = { diaryId ->
+                navController.navigate(Screen.Write.passDiaryId(diaryId))
+            }
         )
         writeRoute(
             onBackPressed = {

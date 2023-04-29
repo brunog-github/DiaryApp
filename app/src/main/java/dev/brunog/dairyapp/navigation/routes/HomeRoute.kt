@@ -11,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.brunog.dairyapp.data.repository.MongoDB
 import dev.brunog.dairyapp.navigation.Screen
 import dev.brunog.dairyapp.presentation.components.DisplayAlertDialog
 import dev.brunog.dairyapp.presentation.screens.home.HomeScreen
@@ -25,6 +24,7 @@ import kotlinx.coroutines.withContext
 
 fun NavGraphBuilder.homeRoute(
     onNavigateToWriteScreen: () -> Unit,
+    onNavigateToWriteScreenWithArgs: (String) -> Unit,
     onNavigateToAuth: () -> Unit,
     onDataLoaded: () -> Unit
 ) {
@@ -49,7 +49,8 @@ fun NavGraphBuilder.homeRoute(
             onMenuClicked = {
                 scope.launch { drawerState.open() }
             },
-            onNavigateToWriteScreen = onNavigateToWriteScreen
+            onNavigateToWriteScreen = onNavigateToWriteScreen,
+            onNavigateToWriteScreenWithArgs = onNavigateToWriteScreenWithArgs
         )
 
         DisplayAlertDialog(
