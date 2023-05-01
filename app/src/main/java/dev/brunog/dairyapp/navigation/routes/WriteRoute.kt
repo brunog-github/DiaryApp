@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
@@ -45,7 +46,14 @@ fun NavGraphBuilder.writeRoute(
             onBackPressed = onBackPressed,
             onDeleteClicked = {},
             onDescriptionChanged = { writeViewModel.setDescription(it) },
-            onTitleChanged = { writeViewModel.setTitle(it) }
+            onTitleChanged = { writeViewModel.setTitle(it) },
+            onSaveClicked = {
+                writeViewModel.insertDiary(
+                    diary = it.apply { mood = Mood.values()[pageNumber].name },
+                    onSuccess = { onBackPressed() },
+                    onError = {}
+                )
+            }
         )
     }
 }

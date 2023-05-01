@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
+import dev.brunog.dairyapp.model.Diary
 import dev.brunog.dairyapp.model.Mood
 import dev.brunog.dairyapp.presentation.screens.viewmodels.UiState
 
@@ -20,7 +21,8 @@ fun WriteScreen(
     onBackPressed: () -> Unit,
     onDeleteClicked: () -> Unit,
     onTitleChanged: (String) -> Unit,
-    onDescriptionChanged: (String) -> Unit
+    onDescriptionChanged: (String) -> Unit,
+    onSaveClicked: (Diary) -> Unit
 ) {
     LaunchedEffect(key1 = uiState.mood) {
         pagerState.scrollToPage(Mood.valueOf(uiState.mood.name).ordinal)
@@ -37,11 +39,13 @@ fun WriteScreen(
     ) { paddingValues ->
         WriteContent(
             paddingValues = paddingValues,
+            uiState = uiState,
             pagerState = pagerState,
             title = uiState.title,
             onTitleChanged = onTitleChanged,
             description = uiState.description,
-            onDescriptionChanged = onDescriptionChanged
+            onDescriptionChanged = onDescriptionChanged,
+            onSaveClicked = onSaveClicked
         )
     }
 }
