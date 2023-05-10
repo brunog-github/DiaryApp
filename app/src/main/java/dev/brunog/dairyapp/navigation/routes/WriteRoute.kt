@@ -53,7 +53,8 @@ fun NavGraphBuilder.writeRoute(
                     onSuccess = { onBackPressed() },
                     onError = {}
                 )
-            }
+            },
+            onDateTimeUpdated = { writeViewModel.updateDateTime(it) }
         )
     }
 }

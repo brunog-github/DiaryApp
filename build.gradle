@@ -10,7 +10,7 @@ buildscript {
         realm_sync = '1.7.0'
         hilt_version = '2.44.2'
         hilt_navigation = '1.0.0'
-        date_picker = '0.9.0'
+        date_picker = '1.0.2'
         coil_version = '2.3.0'
         pager_accompanist = '0.27.0'
         messagebar_compose = '1.0.5'

@@ -10,6 +10,7 @@ import com.google.accompanist.pager.PagerState
 import dev.brunog.dairyapp.model.Diary
 import dev.brunog.dairyapp.model.Mood
 import dev.brunog.dairyapp.presentation.screens.viewmodels.UiState
+import java.time.ZonedDateTime
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -22,7 +23,8 @@ fun WriteScreen(
     onDeleteClicked: () -> Unit,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
-    onSaveClicked: (Diary) -> Unit
+    onSaveClicked: (Diary) -> Unit,
+    onDateTimeUpdated: (ZonedDateTime) -> Unit
 ) {
     LaunchedEffect(key1 = uiState.mood) {
         pagerState.scrollToPage(Mood.valueOf(uiState.mood.name).ordinal)
@@ -33,7 +35,8 @@ fun WriteScreen(
                 moodName = moodName,
                 onBackPressed = onBackPressed,
                 selectedDiary = uiState.selectedDiary,
-                onDeleteClicked = onDeleteClicked
+                onDeleteClicked = onDeleteClicked,
+                onDateTimeUpdated = onDateTimeUpdated
             )
         }
     ) { paddingValues ->

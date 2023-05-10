@@ -10,10 +10,13 @@ import dev.brunog.dairyapp.data.repository.MongoDB
 import dev.brunog.dairyapp.model.Diary
 import dev.brunog.dairyapp.model.Mood
 import dev.brunog.dairyapp.util.RequestState
+import dev.brunog.dairyapp.util.toRealmInstant
+import io.realm.kotlin.types.RealmInstant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.mongodb.kbson.ObjectId
+import java.time.ZonedDateTime
 
 class WriteViewModel(
     private val savedStateHandle: SavedStateHandle
@@ -65,6 +68,10 @@ class WriteViewModel(
         uiState = uiState.copy(mood = Mood.valueOf(mood))
     }
 
+    fun updateDateTime(zonedDateTime: ZonedDateTime) {
+        uiState = uiState.copy(updatedDateTime = zonedDateTime.toInstant().toRealmInstant())
+    }
+
     fun upsertDiary(diary: Diary, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             if (uiState.selectedDiaryId != null) {
@@ -76,7 +83,9 @@ class WriteViewModel(
     }
 
     private suspend fun insertDiary(diary: Diary, onSuccess: () -> Unit, onError: (String) -> Unit) {
-        val result = MongoDB.insertDiary(diary = diary)
+        val result = MongoDB.insertDiary(diary = diary.apply {
+            if (uiState.updatedDateTime != null) date = uiState.updatedDateTime!!
+        })
         if (result is RequestState.Success) {
             withContext(Dispatchers.Main) {
                 onSuccess()
@@ -93,7 +102,11 @@ class WriteViewModel(
         val result = MongoDB.updateDiary(
             diary = diary.apply {
                 _id = ObjectId.invoke(uiState.selectedDiaryId!!)
-                date = uiState.selectedDiary!!.date
+                date = if (uiState.updatedDateTime != null) {
+                    uiState.updatedDateTime!!
+                } else {
+                    uiState.selectedDiary!!.date
+                }
             }
         )
         if (result is RequestState.Success) {
@@ -113,5 +126,6 @@ data class UiState(
     val selectedDiary: Diary? = null,
     val title: String = "",
     val description: String = "",
-    val mood: Mood = Mood.Neutral
+    val mood: Mood = Mood.Neutral,
+    val updatedDateTime: RealmInstant? = null
 )
