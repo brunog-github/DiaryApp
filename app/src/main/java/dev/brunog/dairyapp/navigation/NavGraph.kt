@@ -40,6 +40,7 @@ fun SetupNavGraph(
         writeRoute(
             onBackPressed = {
                 navController.popBackStack()
+                navController.navigate(Screen.Home.route)
             }
         )
     }
